@@ -1,9 +1,3 @@
-from typing import List, Optional, Tuple
-import requests
-from html.parser import HTMLParser
-import os
-import argparse
-
 '''
 MIT License
 
@@ -28,6 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 '''
+
+from typing import List, Optional, Tuple
+import requests
+from html.parser import HTMLParser
+import os
+import argparse
 
 
 class CfParser(HTMLParser):
