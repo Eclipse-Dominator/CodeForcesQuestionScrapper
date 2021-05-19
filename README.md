@@ -1,7 +1,9 @@
 # Code Forces questions scrapper CLI
 Scrapes Code forces questions, convert them to markdown files and generate respective templates as well as sample input and output files for the problem
 
+The CLI can handle questions with images and text as well as if the question is in the form of a pdf.
 
+Note: this might not work for earlier contests where input and output files are stored in ```<pre>``` tags with  ```<br> ```instead of newlines!
 
 ### Usage:
 
@@ -16,7 +18,7 @@ TEMPLATE defaults to template.cpp in the directory where the CLI file is stored.
 
 Saved problems will be stored in the same directory as where the CLI files is located
 
-##### Note: this might not work for earlier contests where input and output files are stored in ```<pre>``` tags with  ```<br> ```instead of newlines!
+##### 
 
 ### Examples 
 
@@ -59,4 +61,13 @@ Code Forces example folder
 ```
 
 
+
+### Sample 
+
+The files generated under sample_generated_folder is obtained using:
+
+```c++
+python cf_manager.py 1525
+python cf_manager.py -q A 1510
+```
 
