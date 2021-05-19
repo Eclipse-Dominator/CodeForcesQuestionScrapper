@@ -16,6 +16,8 @@ TEMPLATE defaults to template.cpp in the directory where the CLI file is stored.
 
 Saved problems will be stored in the same directory as where the CLI files is located
 
+##### Note: this might not work for earlier contests where input and output files are stored in ```<pre>``` tags with  ```<br> ```instead of newlines!
+
 ### Examples 
 
 ```c++
