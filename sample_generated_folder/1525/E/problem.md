@@ -18,7 +18,7 @@ output: standard output
 
 Monocarp is playing a game "Assimilation IV". In this game he manages a great empire: builds cities and conquers new lands.
 
-Monocarp's empire has $n$ cities. In order to conquer new lands he plans to build one Monument in each city. The game is turn-based and, since Monocarp is still amateur, he builds exactly one Monument per turn.
+Monocarp's empire has $n$ cities. In order to conquer new lands he plans to build **one Monument in each city**. The game is turn-based and, since Monocarp is still amateur, he builds exactly one Monument per turn.
 
 Monocarp has $m$ points on the map he'd like to control using the constructed Monuments. For each point he knows the distance between it and each city. Monuments work in the following way: when built in some city, a Monument controls all points at distance at most $1$ to this city. Next turn, the Monument controls all points at distance at most $2$, the turn after — at distance at most $3$, and so on. Monocarp will build $n$ Monuments in $n$ turns and his empire will conquer all points that are controlled by at least one Monument.
 

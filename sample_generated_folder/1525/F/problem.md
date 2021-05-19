@@ -22,15 +22,15 @@ The city consists of $n$ halls and $m$ one-directional tunnels connecting them. 
 
 The city will be attacked by $k$ waves of goblins; during the $i$-th wave, $i$ goblins attack the city. Monocarp's goal is to pass all $k$ waves.
 
-The $i$-th wave goes as follows: firstly, $i$ goblins appear in some halls of the city and pillage them; at most one goblin appears in each hall. Then, goblins start moving along the tunnels, pillaging all the halls in their path. 
+The $i$-th wave goes as follows: firstly, $i$ goblins appear in some halls of the city and pillage them; **at most one goblin appears in each hall**. Then, goblins start moving along the tunnels, pillaging all the halls in their path. 
 
-Goblins are very greedy and cunning, so they choose their paths so that no two goblins pass through the same hall. Among all possible attack plans, they choose a plan which allows them to pillage the maximum number of halls. After goblins are done pillaging, they leave the city.
+Goblins are very greedy and cunning, so they choose their paths so that no two goblins pass through the same hall. Among all possible attack plans, they choose a plan which allows them to **pillage the maximum number of halls**. After goblins are done pillaging, they leave the city.
 
 If all halls are pillaged during the wave — Monocarp loses the game. Otherwise, the city is restored. If some hall is pillaged during a wave, goblins are still interested in pillaging it during the next waves.
 
 Before each wave, Monocarp can spend some time preparing to it. Monocarp doesn't have any strict time limits on his preparations (he decides when to call each wave by himself), but the longer he prepares for a wave, the fewer points he gets for passing it. If Monocarp prepares for the $i$-th wave for $t_i$ minutes, then he gets $\max(0, x_i - t_i \cdot y_i)$ points for passing it (obviously, if he doesn't lose in the process).
 
-While preparing for a wave, Monocarp can block tunnels. He can spend one minute to either block all tunnels leading from some hall or block all tunnels leading to some hall. If Monocarp blocks a tunnel while preparing for a wave, it stays blocked during the next waves as well.
+While preparing for a wave, Monocarp can block tunnels. He can spend one minute to **either block all tunnels leading from some hall or block all tunnels leading to some hall**. If Monocarp blocks a tunnel while preparing for a wave, it stays blocked during the next waves as well.
 
 Help Monocarp to defend against all $k$ waves of goblins and get the maximum possible amount of points!
 
@@ -41,7 +41,7 @@ Help Monocarp to defend against all $k$ waves of goblins and get the maximum pos
 
 The first line contains three integers $n$, $m$ and $k$ ($2 \le n \le 50$; $0 \le m \le \frac{n(n - 1)}{2}$; $1 \le k \le n - 1$) — the number of halls in the city, the number of tunnels and the number of goblin waves, correspondely.
 
-Next $m$ lines describe tunnels. The $i$-th line contains two integers $u_i$ and $v_i$ ($1 \le u_i, v_i \le n$; $u_i \ne v_i$). It means that the tunnel goes from hall $u_i$ to hall $v_i$. The structure of tunnels has the following property: if a goblin leaves any hall, he cannot return to that hall. There is at most one tunnel between each pair of halls.
+Next $m$ lines describe tunnels. The $i$-th line contains two integers $u_i$ and $v_i$ ($1 \le u_i, v_i \le n$; $u_i \ne v_i$). It means that the tunnel goes from hall $u_i$ to hall $v_i$. **The structure of tunnels has the following property: if a goblin leaves any hall, he cannot return to that hall**. There is at most one tunnel between each pair of halls.
 
 Next $k$ lines describe the scoring system. The $i$-th line contains two integers $x_i$ and $y_i$ ($1 \le x_i \le 10^9$; $1 \le y_i \le 10^9$). If Monocarp prepares for the $i$-th wave for $t_i$ minutes, then he gets $\max(0, x_i - t_i \cdot y_i)$ points for passing it.
 

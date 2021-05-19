@@ -22,7 +22,7 @@ The $i$-th robot starts at an integer coordinate $x_i~(0 < x_i < m)$ and moves e
 
 Whenever a robot reaches a wall, it turns around instantly and continues his ride in the opposite direction with the same speed.
 
-Whenever several robots meet at the same integer coordinate, they collide and explode into dust. Once a robot has exploded, it doesn't collide with any other robot. Note that if several robots meet at a non-integer coordinate, nothing happens.
+Whenever several robots meet at the same **integer** coordinate, they collide and explode into dust. Once a robot has exploded, it doesn't collide with any other robot. Note that if several robots meet at a non-integer coordinate, nothing happens.
 
 For each robot find out if it ever explodes and print the time of explosion if it happens and $-1$ otherwise.
 

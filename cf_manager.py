@@ -95,7 +95,6 @@ class CfParser(HTMLParser):
             else:
                 self.mkdown_data += f"\n### {data}\n"
         elif self.checkClass(self.tag[-1], "div", "class", "section-title"):
-
             self.mkdown_data += f"\n#### {data}"
         elif self.checkClass(self.tag[-1], "pre"):
             if self.drawTable:
@@ -107,6 +106,10 @@ class CfParser(HTMLParser):
                     '<br />'.join(data.strip().split('\n'))+" |"
             else:
                 self.mkdown_data += data.strip()
+        elif self.checkClass(self.tag[-1], "span", "class", "tex-font-style-bf"):
+            data = data.replace("$", "\\$")
+            data = data.replace("\\$\\$\\$", "$")
+            self.mkdown_data += f"**{data}**"
         else:
             data = data.replace("$", "\\$")
             data = data.replace("\\$\\$\\$", "$")
