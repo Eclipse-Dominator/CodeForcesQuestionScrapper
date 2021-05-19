@@ -103,6 +103,7 @@ class CfParser(HTMLParser):
                 f.write(self.input[i])
             with open(f"{url}output_{i}", "w+") as f:
                 f.write(self.output[i])
+        self.saveTemplate(url)
 
     def saveTemplate(self, url: str):
         if (url[-1] != "/"):
@@ -161,7 +162,7 @@ p = CfParser()
 
 p.addTemplate(args.template)
 
-if args.verbosity >= 0:
+if args.verbosity > 0:
     print("Verbosity mode is on")
 
 contestsGenerator = args.contests
@@ -181,11 +182,18 @@ elif args.question:
     if (res.status_code != 200):
         print("Question does not exist")
         exit(0)
+    if 'application/pdf' in res.headers.get("Content-Type"):
+        if args.verbosity > 1:
+            print(f"{args.question} is a pdf, downloading pdf...")
+        with open(f"{mkfolder_exist(f'{project_dir}/{args.contests[0]}/{args.question}')}/problem.pdf", 'wb+') as f:
+            f.write(res.content)
+        p.saveTemplate(f"{project_dir}/{args.contests[0]}/{args.question}")
+        exit(0)
 
     p.feed(res.content.decode('UTF-8'))
 
     p.saveData(mkfolder_exist(
-        f"{project_dir}/{args.contests[0]}/{args.question.upper()}"))
+        f"{project_dir}/{args.contests[0]}/{args.question}"))
     exit(0)
 for contest in contestsGenerator:
     for i in range(65, 91):
