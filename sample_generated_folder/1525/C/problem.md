@@ -31,6 +31,7 @@ For each robot find out if it ever explodes and print the time of explosion if i
 
 #### Input
 
+
 The first line contains a single integer $t$ ($1 \le t \le 1000$) — the number of testcases.
 
 Then the descriptions of $t$ testcases follow.
@@ -48,10 +49,12 @@ The sum of $n$ over all testcases doesn't exceed $3 \cdot 10^5$.
 
 #### Output
 
+
 For each testcase print $n$ integers — for the $i$-th robot output the time it explodes at if it does and $-1$ otherwise.
 
 
 #### Example
+
 
 
 | Input |
@@ -65,8 +68,11 @@ For each testcase print $n$ integers — for the $i$-th robot output the time i
 
 #### Note
 
-Here is the picture for the seconds $0, 1, 2$ and $3$ of the first testcase:  
-![](https://espresso.codeforces.com/b87cb14ffe6716c99529f42f52931e94eaa573c6.png) 
+
+Here is the picture for the seconds $0, 1, 2$ and $3$ of the first testcase: 
+
+![](https://espresso.codeforces.com/b87cb14ffe6716c99529f42f52931e94eaa573c6.png)
+
 
 Notice that robots $2$ and $3$ don't collide because they meet at the same point $2.5$, which is not integer.
 

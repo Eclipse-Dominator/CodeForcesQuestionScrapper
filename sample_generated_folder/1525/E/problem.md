@@ -29,6 +29,7 @@ Monocarp can't figure out any strategy, so during each turn he will choose a cit
 
 #### Input
 
+
 The first line contains two integers $n$ and $m$ ($1 \le n \le 20$; $1 \le m \le 5 \cdot 10^4$) — the number of cities and the number of points.
 
 Next $n$ lines contains $m$ integers each: the $j$-th integer of the $i$-th line $d_{i, j}$ ($1 \le d_{i, j} \le n + 1$) is the distance between the $i$-th city and the $j$-th point.
@@ -36,10 +37,12 @@ Next $n$ lines contains $m$ integers each: the $j$-th integer of the $i$-th line
 
 #### Output
 
+
 It can be shown that the expected number of points Monocarp conquers at the end of the $n$-th turn can be represented as an irreducible fraction $\frac{x}{y}$. Print this fraction modulo $998\,244\,353$, i. e. value $x \cdot y^{-1} \bmod 998244353$ where $y^{-1}$ is such number that $y \cdot y^{-1} \bmod 998244353 = 1$.
 
 
 #### Example
+
 
 
 | Input |
@@ -53,4 +56,20 @@ It can be shown that the expected number of points Monocarp conquers at the end 
 
 #### Note
 
-Let's look at all possible orders of cities Monuments will be build in:   $[1, 2, 3]$:   the first city controls all points at distance at most $3$, in other words, points $1$ and $4$;  the second city controls all points at distance at most $2$, or points $1$, $3$ and $5$;  the third city controls all points at distance at most $1$, or point $1$.  In total, $4$ points are controlled.  $[1, 3, 2]$: the first city controls points $1$ and $4$; the second city — points $1$ and $3$; the third city — point $1$. In total, $3$ points.  $[2, 1, 3]$: the first city controls point $1$; the second city — points $1$, $3$ and $5$; the third city — point $1$. In total, $3$ points.  $[2, 3, 1]$: the first city controls point $1$; the second city — points $1$, $3$ and $5$; the third city — point $1$. In total, $3$ points.  $[3, 1, 2]$: the first city controls point $1$; the second city — points $1$ and $3$; the third city — points $1$ and $5$. In total, $3$ points.  $[3, 2, 1]$: the first city controls point $1$; the second city — points $1$, $3$ and $5$; the third city — points $1$ and $5$. In total, $3$ points.  The expected number of controlled points is $\frac{4 + 3 + 3 + 3 + 3 + 3}{6}$ $=$ $\frac{19}{6}$ or $19 \cdot 6^{-1}$ $\equiv$ $19 \cdot 166374059$ $\equiv$ $166374062$ $\pmod{998244353}$
+
+Let's look at all possible orders of cities Monuments will be build in: 
+
+
+-  $[1, 2, 3]$: 
+
+
+  -  the first city controls all points at distance at most $3$, in other words, points $1$ and $4$; 
+  -  the second city controls all points at distance at most $2$, or points $1$, $3$ and $5$; 
+  -  the third city controls all points at distance at most $1$, or point $1$. 
+
+   In total, $4$ points are controlled. 
+-  $[1, 3, 2]$: the first city controls points $1$ and $4$; the second city — points $1$ and $3$; the third city — point $1$. In total, $3$ points. 
+-  $[2, 1, 3]$: the first city controls point $1$; the second city — points $1$, $3$ and $5$; the third city — point $1$. In total, $3$ points. 
+-  $[2, 3, 1]$: the first city controls point $1$; the second city — points $1$, $3$ and $5$; the third city — point $1$. In total, $3$ points. 
+-  $[3, 1, 2]$: the first city controls point $1$; the second city — points $1$ and $3$; the third city — points $1$ and $5$. In total, $3$ points. 
+-  $[3, 2, 1]$: the first city controls point $1$; the second city — points $1$, $3$ and $5$; the third city — points $1$ and $5$. In total, $3$ points.  The expected number of controlled points is $\frac{4 + 3 + 3 + 3 + 3 + 3}{6}$ $=$ $\frac{19}{6}$ or $19 \cdot 6^{-1}$ $\equiv$ $19 \cdot 166374059$ $\equiv$ $166374062$ $\pmod{998244353}$

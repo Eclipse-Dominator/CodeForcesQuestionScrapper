@@ -29,6 +29,7 @@ Your task is to calculate the minimum number of operations described above to so
 
 #### Input
 
+
 The first line contains a single integer $t$ ($1 \le t \le 2000$) — the number of test cases.
 
 The first line of the test case contains a single integer $n$ ($3 \le n \le 50$) — the number of elements in the permutation.
@@ -38,10 +39,12 @@ The second line of the test case contains $n$ distinct integers from $1$ to $n$�
 
 #### Output
 
+
 For each test case, output a single integer — the minimum number of operations described above to sort the array $a$ in ascending order.
 
 
 #### Example
+
 
 
 | Input |
@@ -54,6 +57,7 @@ For each test case, output a single integer — the minimum number of operation
 
 
 #### Note
+
 
 In the explanations, $a[i, j]$ defines the subarray of $a$ that starts from the $i$-th element and ends with the $j$-th element.
 

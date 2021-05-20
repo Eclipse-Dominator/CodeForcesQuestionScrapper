@@ -39,6 +39,10 @@ class CfParser(HTMLParser):
         self.output_text = ""
         self.input = []
         self.output = []
+        self.ul_ol_container = []
+        self.last_removed_tag = ""
+        self.tempData = ""
+        self.inlineContainers = set(["span", "br", "ol", "ul"])
 
     def addTemplate(self, path: str):
         try:
@@ -57,7 +61,7 @@ class CfParser(HTMLParser):
             if (tag == "img"):
                 for attr in attrs:
                     if attr[0] == "src":
-                        self.mkdown_data += f"\n![]({attr[1]})"
+                        self.tempData += f"\n![]({attr[1]})"
                         break
             elif self.checkClass(self.tag[-1], "div", "class", "input"):
                 self.input_bool = True
@@ -65,55 +69,95 @@ class CfParser(HTMLParser):
             elif self.checkClass(self.tag[-1], "div", "class", "output"):
                 self.input_bool = False
                 self.drawTable = True
+            elif self.checkClass(self.tag[-1], "ul"):
+                self.tempData += "\n"
+                self.ul_ol_container.append(["ul", "-"])
+            elif self.checkClass(self.tag[-1], "ol"):
+                self.tempData += "\n"
+                self.ul_ol_container.append(["ol", 0])
+
             elif self.checkClass(self.tag[-1], "div", "class", "input-specification"):
-                self.mkdown_data += "\n\n------\n"
+                self.tempData += "\n\n------\n"
             elif self.checkClass(self.tag[-1], "div"):
-                self.mkdown_data += "\n"
+                self.tempData += "\n"
             elif self.checkClass(self.tag[-1], "p"):
-                self.mkdown_data += "\n\n"
+                self.tempData += "\n\n"
 
     def handle_endtag(self, tag: str) -> None:
         if not self.searching:
             return
-        tag = self.tag.pop()
+        self.last_removed_tag = self.tag.pop()
 
-        if self.checkClass(tag, "div", "class", "problem-statement"):
+        if self.checkClass(self.last_removed_tag, "div", "class", "problem-statement"):
             self.searching = False
-        elif self.checkClass(tag, "div", "class", "property-title"):
-            self.mkdown_data += ": "
-        elif self.checkClass(tag, "div", "class", "header"):
-            self.mkdown_data += "\n\n------\n"
-        elif self.checkClass(tag, "pre"):
+        elif self.checkClass(self.last_removed_tag, "div", "class", "property-title"):
+            self.tempData += ": "
+        elif self.checkClass(self.last_removed_tag, "div", "class", "header"):
+            self.tempData += "\n\n------\n"
+        elif self.checkClass(self.last_removed_tag, "pre"):
             self.drawTable = False
+        elif self.checkClass(self.last_removed_tag, "ul"):
+            self.ul_ol_container.pop()
+        elif self.checkClass(self.last_removed_tag, "ol"):
+            self.ul_ol_container.pop()
+
+        if self.last_removed_tag[0] not in self.inlineContainers:
+            if self.tempData:
+                self.mkdown_data += self.tempData
+                self.tempData = ""
 
     def handle_data(self, data: str) -> None:
         if not self.searching:
             return
         if self.checkClass(self.tag[-1], "div", "class", "title"):
             if self.drawTable:
-                self.mkdown_data += f"\n| {data} |\n| ---- |\n"
+                self.tempData += f"\n| {data} |\n| ---- |\n"
             else:
-                self.mkdown_data += f"\n### {data}\n"
+                self.tempData += f"\n### {data}\n"
         elif self.checkClass(self.tag[-1], "div", "class", "section-title"):
-            self.mkdown_data += f"\n#### {data}"
-        elif self.checkClass(self.tag[-1], "pre"):
-            if self.drawTable:
-                if self.input_bool:
-                    self.input.append(data.strip())
-                else:
-                    self.output.append(data.strip())
-                self.mkdown_data += "| " + \
-                    '<br />'.join(data.strip().split('\n'))+" |"
-            else:
-                self.mkdown_data += data.strip()
-        elif self.checkClass(self.tag[-1], "span", "class", "tex-font-style-bf"):
-            data = data.replace("$", "\\$")
-            data = data.replace("\\$\\$\\$", "$")
-            self.mkdown_data += f"**{data}**"
+            self.tempData += f"\n#### {data}\n"
         else:
             data = data.replace("$", "\\$")
-            data = data.replace("\\$\\$\\$", "$")
-            self.mkdown_data += data
+            data = data.replace("*", "\\*")
+
+            if self.checkClass(self.tag[-1], "pre"):
+                if self.drawTable:
+                    if self.input_bool:
+                        self.input.append(data.strip())
+                    else:
+                        self.output.append(data.strip())
+                    self.mkdown_data += "| " + \
+                        '<br />'.join(data.strip().split('\n'))+" |"
+                else:
+                    self.mkdown_data += data.strip()
+            else:
+                if not data.strip():
+                    self.tempData += "\n"
+                    return
+                data = data.replace("\\$\\$\\$", "$")
+
+                if self.checkClass(self.tag[-1], "li"):
+                    if self.last_removed_tag[0] not in self.inlineContainers:
+                        if self.ul_ol_container[-1][0] == "ul":
+                            delimeter = "- "
+                        else:
+                            self.ul_ol_container[-1][1] += 1
+                            delimeter = f"{self.ul_ol_container[-1][1]}. "
+                        self.tempData += "\n"+"  " * \
+                            (len(self.ul_ol_container)-1) + delimeter
+                    elif self.last_removed_tag[0] in ["ul", "ol"]:
+                        self.tempData += "\n\n"+"  " * \
+                            (len(self.ul_ol_container))
+
+                if self.checkClass(self.tag[-1], "a"):
+                    for prop in self.tag[-1][1]:
+                        if prop[0] == "href" and prop[1]:
+                            data = f"[{data}]({prop[1]})"
+
+                if self.checkClass(self.tag[-1], "span", "class", "tex-font-style-bf"):
+                    data = f"**{data}**"
+
+                self.tempData += data
 
     def clearData(self):
         self.__init__()
@@ -161,7 +205,22 @@ def mkfolder_exist(path: str) -> str:
     return path
 
 
-ROOT_DIR = "https://codeforces.com/problemset/problem/"
+def questionLetterGenerator():
+    for i in range(65, 91):
+        Letter = chr(i)
+        result = yield Letter
+        if result:
+            continue
+        additional_addon = ["1", "2", "3", "4", "5", "6", "7"]
+        for j in additional_addon:
+            result = yield Letter+j
+            if not result:
+                if j == additional_addon[0]:
+                    yield ""
+                    return
+                break
+
+
 project_dir = os.path.dirname(os.path.normpath(__file__))
 project_dir = project_dir if project_dir else "."
 
@@ -172,12 +231,13 @@ parser.add_argument('contests', type=int, nargs="+",
                     help="List of contests to download")
 parser.add_argument('-t', '--template', type=str,
                     help="Add path directory for the template file.", default=f"{project_dir}/template.cpp")
+parser.add_argument('-c', '--contest', action="store_true",
+                    help="Download problems from contests instead of problemsets")
 grp = parser.add_mutually_exclusive_group()
 grp.add_argument('-r', '--range', action="store_true",
                  help="2 values as min max range and download contests in between")
-arg_grp = grp.add_argument_group("download individual problem")
-arg_grp.add_argument('-q', '--question', type=str, nargs="?", choices=tuple((chr(i) for i in range(65, 91))),
-                     help="download a specific question from the contest")
+grp.add_argument('-q', '--question', type=str, default="",
+                 help="download a specific question from the contest")
 parser.add_argument('-v', '--verbosity', action="count",
                     default=0, help="changes verbosity [-v]")
 
@@ -191,18 +251,25 @@ if args.verbosity > 0:
     print("Verbosity mode is on")
 
 contestsGenerator = args.contests
+if args.contest:
+    ROOT_DIR = "https://codeforces.com/contest/{}/problem/{}"
+else:
+    ROOT_DIR = "https://codeforces.com/problemset/problem/{}/{}"
+
+
 if args.range:
     if len(args.contests) != 2:
         print("you need 2 argument for min and max range!")
         exit(0)
     contestsGenerator = range(args.contests[0], args.contests[1]+1)
+
 elif args.question:
     if len(args.contests) != 1:
         print("You can only enter 1 contests when downloading individual question")
     if args.verbosity:
         print(
             f"Collecting {args.contests[0]}/{args.question} information from CodeForces.com...")
-    res = requests.get(f'{ROOT_DIR}{args.contests[0]}/{args.question}',
+    res = requests.get(ROOT_DIR.format(args.contests[0], args.question),
                        allow_redirects=False)
     if (res.status_code != 200):
         print("Question does not exist")
@@ -221,17 +288,19 @@ elif args.question:
         f"{project_dir}/{args.contests[0]}/{args.question}"))
     exit(0)
 for contest in contestsGenerator:
-    for i in range(65, 91):
-        Question = chr(i)
+    lettergen = questionLetterGenerator()
+    Question = next(lettergen)
+    while Question:
         if args.verbosity:
             print(f"Collecting {contest}/{Question} from CodeForces.com...")
-        res = requests.get(f'{ROOT_DIR}{contest}/{Question}',
+        res = requests.get(ROOT_DIR.format(contest, Question),
                            allow_redirects=False)
         if (res.status_code != 200):
             if args.verbosity > 1:
                 print(
                     f"{contest}/{Question} does not exist on this question. Moving on...")
-            break
+            Question = lettergen.send(False)
+            continue
         if 'application/pdf' in res.headers.get("Content-Type"):
             if args.verbosity > 1:
                 print(f"{Question} is a pdf, downloading pdf...")
@@ -242,3 +311,6 @@ for contest in contestsGenerator:
         p.feed(res.content.decode('UTF-8'))
         p.saveData(mkfolder_exist(f"{project_dir}/{contest}/{Question}"))
         p.clearData()
+        Question = lettergen.send(True)
+    if args.verbosity:
+        print(f"finish collecting questions on contest {contest}")

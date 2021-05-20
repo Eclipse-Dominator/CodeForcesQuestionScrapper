@@ -27,6 +27,7 @@ You want to achieve the following situation: every seat that was initially occup
 
 #### Input
 
+
 The first line contains one integer $n$ ($2 \le n \le 5000$) — the number of armchairs.
 
 The second line contains $n$ integers $a_1, a_2, \dots, a_n$ ($0 \le a_i \le 1$). $a_i = 1$ means that the $i$-th armchair is initially occupied, $a_i = 0$ means that it is initially free. The number of occupied armchairs is at most $\frac{n}{2}$.
@@ -34,10 +35,12 @@ The second line contains $n$ integers $a_1, a_2, \dots, a_n$ ($0 \le a_i \le 1$)
 
 #### Output
 
+
 Print one integer — the minimum number of minutes you have to spend to achieve the following situation: every seat that was initially occupied must be free.
 
 
 #### Examples
+
 
 
 | Input |
@@ -67,8 +70,20 @@ Print one integer — the minimum number of minutes you have to spend to achieve
 
 #### Note
 
-In the first test, you can perform the following sequence:  ask a person to move from armchair $1$ to armchair $2$, it takes $1$ minute;  ask a person to move from armchair $7$ to armchair $6$, it takes $1$ minute;  ask a person to move from armchair $4$ to armchair $5$, it takes $1$ minute. 
 
-In the second test, you can perform the following sequence:  ask a person to move from armchair $1$ to armchair $4$, it takes $3$ minutes;  ask a person to move from armchair $2$ to armchair $6$, it takes $4$ minutes;  ask a person to move from armchair $4$ to armchair $5$, it takes $1$ minute;  ask a person to move from armchair $3$ to armchair $4$, it takes $1$ minute. 
+In the first test, you can perform the following sequence:
+
+
+1.  ask a person to move from armchair $1$ to armchair $2$, it takes $1$ minute; 
+2.  ask a person to move from armchair $7$ to armchair $6$, it takes $1$ minute; 
+3.  ask a person to move from armchair $4$ to armchair $5$, it takes $1$ minute. 
+
+In the second test, you can perform the following sequence:
+
+
+1.  ask a person to move from armchair $1$ to armchair $4$, it takes $3$ minutes; 
+2.  ask a person to move from armchair $2$ to armchair $6$, it takes $4$ minutes; 
+3.  ask a person to move from armchair $4$ to armchair $5$, it takes $1$ minute; 
+4.  ask a person to move from armchair $3$ to armchair $4$, it takes $1$ minute. 
 
 In the third test, no seat is occupied so your goal is achieved instantly.

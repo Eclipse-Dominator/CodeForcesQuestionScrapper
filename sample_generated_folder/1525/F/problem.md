@@ -39,6 +39,7 @@ Help Monocarp to defend against all $k$ waves of goblins and get the maximum pos
 
 #### Input
 
+
 The first line contains three integers $n$, $m$ and $k$ ($2 \le n \le 50$; $0 \le m \le \frac{n(n - 1)}{2}$; $1 \le k \le n - 1$) — the number of halls in the city, the number of tunnels and the number of goblin waves, correspondely.
 
 Next $m$ lines describe tunnels. The $i$-th line contains two integers $u_i$ and $v_i$ ($1 \le u_i, v_i \le n$; $u_i \ne v_i$). It means that the tunnel goes from hall $u_i$ to hall $v_i$. **The structure of tunnels has the following property: if a goblin leaves any hall, he cannot return to that hall**. There is at most one tunnel between each pair of halls.
@@ -48,9 +49,15 @@ Next $k$ lines describe the scoring system. The $i$-th line contains two integer
 
 #### Output
 
+
 Print the optimal Monocarp's strategy in the following format:
 
-At first, print one integer $a$ ($k \le a \le 2n + k$) — the number of actions Monocarp will perform. Next, print actions themselves in the order Monocarp performs them. The $i$-th action is described by a single integer $b_i$ ($-n \le b_i \le n$) using the following format:  if $b_i > 0$ then Monocarp blocks all tunnels going out from the hall $b_i$;  if $b_i < 0$ then Monocarp blocks all tunnels going into the hall $|b_i|$;  if $b_i = 0$ then Monocarp calls the next goblin wave. 
+At first, print one integer $a$ ($k \le a \le 2n + k$) — the number of actions Monocarp will perform. Next, print actions themselves in the order Monocarp performs them. The $i$-th action is described by a single integer $b_i$ ($-n \le b_i \le n$) using the following format:
+
+
+-  if $b_i > 0$ then Monocarp blocks all tunnels going out from the hall $b_i$; 
+-  if $b_i < 0$ then Monocarp blocks all tunnels going into the hall $|b_i|$; 
+-  if $b_i = 0$ then Monocarp calls the next goblin wave. 
 
 You can't repeat the same block action $b_i$ several times. Monocarp must survive all waves he calls (goblins shouldn't be able to pillage all halls). Monocarp should call exactly $k$ waves and earn the maximum possible number of points in total.
 
@@ -58,6 +65,7 @@ If there are several optimal strategies — print any of them.
 
 
 #### Examples
+
 
 
 | Input |
@@ -86,6 +94,7 @@ If there are several optimal strategies — print any of them.
 
 
 #### Note
+
 
 In the first example, Monocarp, firstly, block all tunnels going in hall $2$, secondly — all tunnels going in hall $3$, and after that calls all waves. He spent two minutes to prepare to wave $1$, so he gets $98$ points for it. He didn't prepare after that, that's why he gets maximum scores for each of next waves ($200$, $10$ and $100$). In total, Monocarp earns $408$ points.
 

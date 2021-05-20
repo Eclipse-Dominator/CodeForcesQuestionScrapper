@@ -27,6 +27,7 @@ A small reminder: if you pour $e$ liters of essence and $w$ liters of water ($e 
 
 #### Input
 
+
 The first line contains the single $t$ ($1 \le t \le 100$) — the number of test cases.
 
 The first and only line of each test case contains a single integer $k$ ($1 \le k \le 100$) — the percentage of essence in a good potion.
@@ -34,10 +35,12 @@ The first and only line of each test case contains a single integer $k$ ($1 \le 
 
 #### Output
 
+
 For each test case, print the minimum number of steps to brew a good potion. It can be proved that it's always possible to achieve it in a finite number of steps.
 
 
 #### Example
+
 
 
 | Input |
@@ -50,6 +53,7 @@ For each test case, print the minimum number of steps to brew a good potion. It 
 
 
 #### Note
+
 
 In the first test case, you should pour $3$ liters of magic essence and $97$ liters of water into the cauldron to get a potion with $3\ \%$ of magic essence.
 
