@@ -16,7 +16,22 @@ The CLI can handle questions with images and text as well as if the question is 
 CLI:
 
 ```shell
-python3 cf_manager.py [-h] [-t TEMPLATE] [-c] [-r | -q QUESTION] [-v] contests [contests ...]
+usage: cf_manager.py [-h] [-t TEMPLATE] [-c] [-r | -q QUESTION] [-v] contests [contests ...]
+
+Download code forces problems and sample case as md and input output files
+
+positional arguments:
+  contests              List of contests to download
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t TEMPLATE, --template TEMPLATE
+                        Add path directory for the template file.
+  -c, --contest         Download problems from contests instead of problemsets
+  -r, --range           2 values as min max range and download contests in between
+  -q QUESTION, --question QUESTION
+                        download a specific question from the contest
+  -v, --verbosity       changes verbosity [-v]
 ```
 
 TEMPLATE defaults to template.cpp in the directory where the CLI file is stored. TEMPLATE file will not overwrite existing solution files
