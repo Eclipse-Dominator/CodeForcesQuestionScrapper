@@ -4,7 +4,7 @@ Scrapes Code forces questions, convert them to markdown files and generate respe
 
 The CLI can handle questions with images and text as well as if the question is in the form of a pdf.
 
-#### Note: 
+#### Note:
 
 1. this might not work for earlier contests where input and output files are stored in `<pre>` tags with `<br> ` instead of newlines!
 2. For the case when the question is a pdf, the sample input and output files will not be generated!
@@ -15,7 +15,7 @@ The CLI can handle questions with images and text as well as if the question is 
 
 CLI:
 
-```shell
+```
 usage: cf_manager.py [-h] [-t TEMPLATE] [-c] [-r | -q QUESTION] [-v] contests [contests ...]
 
 Download code forces problems and sample case as md and input output files
@@ -55,8 +55,6 @@ python cf_manager.py 1500 1510 1247 //download all contest problems from 1500, 1
 ```c++
 python cf_manager.py -c 1500 //download all contest problems from 1500, 1510 and 1247 from CodeForces contest instead of problemset
 ```
-
-
 
 ### Structure:
 
